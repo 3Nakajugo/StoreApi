@@ -43,7 +43,7 @@ def get_single_product(product_id):
     for product in products:
         if product['product_id'] == product_id:
             return jsonify(product), 200
-        return jsonify({'message': 'no product with such id'}), 404
+        return jsonify({'message': 'no product with such an id'}), 404
 
 
 if __name__ == '__main__':
