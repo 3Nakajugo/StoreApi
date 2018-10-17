@@ -17,7 +17,17 @@ class TestStore(unittest.TestCase):
         self.assertEqual(response.status_code, 200)
 
     def test_empty_list(self):
-
         response = self.client.get(
             '/api/v1/products', content_type='application/json')
         self.assertEqual(response.status_code, 400)
+        self.assertEqual(response.json, {'message': 'no products to display'})
+
+    def test_get_single_product(self):
+        response = self.client.get(
+            '/api/v1/products/1', content_type='application/json')
+        self.assertEqual(response.status_code, 200)
+
+    def test_get_product_that_doesnot_exist(self):
+        response = self.client.get(
+            '/api/v1/products/3', content_type='application/json')
+        self.assertEqual(response.status_code, 404)
