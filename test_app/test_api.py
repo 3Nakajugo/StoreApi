@@ -1,5 +1,7 @@
 import unittest
 
+from flask import json
+
 from app1.api import app
 
 
@@ -31,3 +33,22 @@ class TestStore(unittest.TestCase):
         response = self.client.get(
             '/api/v1/products/3', content_type='application/json')
         self.assertEqual(response.status_code, 404)
+
+    def test_create_product(self):
+        product = {"name": "soap",
+                   "quantity": "20",
+                   "price": "1500"
+                   }
+        response = self.client.post(
+            '/api/v1/products', content_type='application/json', data=json.dumps(product))
+        self.assertEqual(response.status_code, 201)
+
+    def test_new_product_has_all_feilds(self):
+        product = {"name": "",
+                   "quantity": "",
+                   "price": ""
+                   }
+        response = self.client.post(
+            '/api/v1/products', content_type='application/json', data=json.dumps(product))
+        self.assertEqual(response.status_code,400)
+        self.assertEqual(response.json,{"message":"please input all fields"})
