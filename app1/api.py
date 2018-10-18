@@ -82,7 +82,3 @@ def get_single_entry(record_id):
     for record in sales_records:
         if record['record_id'] == record_id:
             return jsonify(record), 200
-
-
-if __name__ == '__main__':
-    app.run(debug=True)
