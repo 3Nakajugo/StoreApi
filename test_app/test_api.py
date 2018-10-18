@@ -50,5 +50,5 @@ class TestStore(unittest.TestCase):
                    }
         response = self.client.post(
             '/api/v1/products', content_type='application/json', data=json.dumps(product))
-        self.assertEqual(response.status_code,400)
-        self.assertEqual(response.json,{"message":"please input all fields"})
+        self.assertEqual(response.status_code, 400)
+        self.assertEqual(response.json, {"message": "please input all fields"})
