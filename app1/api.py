@@ -3,6 +3,7 @@ from flask import Flask, jsonify, request
 app = Flask(__name__)
 
 products = []
+sales_records = []
 
 
 @app.route('/')
@@ -50,6 +51,24 @@ def create_product():
         return jsonify({"message": "please input all fields"}), 400
     products.append(new_product)
     return jsonify(new_product), 201
+
+
+@app.route('/api/v1/sales', methods=['POST'])
+def create_new_sales_record():
+    request_data = request.get_json(force=True)
+    new_record = dict()
+    if len(sales_records) == 0:
+        new_record["record_id"] = 1
+    else:
+        new_record['record_id'] = sales_records[-1]['record_id']+1
+    new_record["date"] = request_data["date"]
+    new_record["item"] = request_data["item"]
+    new_record["quantity"] = request_data["quantity"]
+    new_record["price"] = request_data["price"]
+    if (new_record["item"] == "" or new_record["quantity"] == "" or new_record["price"] == ""):
+        return jsonify({"message": "please input all fields"}), 400
+    sales_records.append(new_record)
+    return jsonify(new_record), 201
 
 
 if __name__ == '__main__':
