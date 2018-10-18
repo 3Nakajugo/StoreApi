@@ -89,3 +89,8 @@ class TestStore(unittest.TestCase):
         response = self.client.get(
             '/api/v1/sales', content_type='application/json')
         self.assertEqual(response.status_code, 200)
+
+    def test_get_single_record(self):
+        response = self.client.get(
+            '/api/v1/sales/1', content_type='application/json')
+        self.assertEqual(response.status_code, 200)
