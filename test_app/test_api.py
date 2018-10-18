@@ -75,3 +75,17 @@ class TestStore(unittest.TestCase):
         response = self.client.post(
             '/api/v1/sales', content_type='application/json', data=json.dumps(sale_record))
         self.assertEqual(response.status_code, 400)
+
+    def test_get_all_sales_records(self):
+        sale_record = {
+            "date": "12/13/2018",
+            "item": "['milk','water']",
+            "quantity": "[2,4]",
+            "price": "['837409237', '78678698']"
+        }
+        response = self.client.post(
+            '/api/v1/sales', content_type='application/json', data=json.dumps(sale_record))
+        self.assertEqual(response.status_code, 201)
+        response = self.client.get(
+            '/api/v1/sales', content_type='application/json')
+        self.assertEqual(response.status_code, 200)

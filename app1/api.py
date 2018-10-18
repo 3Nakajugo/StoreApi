@@ -71,5 +71,11 @@ def create_new_sales_record():
     return jsonify(new_record), 201
 
 
+@app.route('/api/v1/sales', methods=['GET'])
+def get_all_sale_records():
+
+    return jsonify({"sale_records": sales_records}), 200
+
+
 if __name__ == '__main__':
     app.run(debug=True)
