@@ -11,32 +11,34 @@ def greet():
     return ('welcome to my store'), 200
 
 
-@app.route('/api/v1/products', methods=['GET', 'POST'])
-def get_or_post_products():
-    if request.method == 'POST':
-        request_data = request.get_json(force=True)
-        new_product = dict()
-        if len(products) == 0:
-            new_product["product_id"] = 1
-        else:
-            new_product['product_id'] = products[-1]['product_id']+1
-        new_product["name"] = request_data["name"]
-        new_product["quantity"] = request_data["quantity"]
-        new_product["price"] = request_data["price"]
-        if (new_product["name"] == "" or new_product["quantity"] == "" or new_product["price"] == ""):
-            return jsonify({"message": "please input all fields"}), 400
-        products.append(new_product)
-        return jsonify(new_product), 201
+@app.route('/api/v1/products', methods=['POST'])
+def post_products():
+    request_data = request.get_json(force=True)
+    new_product = dict()
+    if len(products) == 0:
+        new_product["product_id"] = 1
     else:
-        product = {"product_id": 1,
-                   "name": "milk",
-                   "quantity": "10000",
-                   "price": "2000"
-                   }
-        products.append(product)
-        if len(products) > 0:
-            return jsonify({'products': products}), 200
-        return jsonify({'message': 'no products to display'}), 400
+        new_product['product_id'] = products[-1]['product_id']+1
+    new_product["name"] = request_data["name"]
+    new_product["quantity"] = request_data["quantity"]
+    new_product["price"] = request_data["price"]
+    if (new_product["name"] == "" or new_product["quantity"] == "" or new_product["price"] == ""):
+        return jsonify({"message": "please input all fields"}), 400
+    products.append(new_product)
+    return jsonify(new_product), 201
+
+
+@app.route('/api/v1/products', methods=['GET'])
+def get_products():
+    product = {"product_id": 1,
+               "name": "milk",
+               "quantity": "10000",
+               "price": "2000"
+               }
+    products.append(product)
+    if len(products) > 0:
+        return jsonify({'products': products}), 200
+    return jsonify({'message': 'no products to display'}), 400
 
 
 @app.route('/api/v1/products/<int:product_id>', methods=['GET'])
