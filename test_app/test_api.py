@@ -34,11 +34,6 @@ class TestStore(unittest.TestCase):
             '/api/v1/products', content_type='application/json')
         self.assertEqual(response.status_code, 200)
 
-    # def test_get_single_product(self):
-    #     response = self.client.get(
-    #         '/api/v1/products/1', content_type='application/json')
-    #     self.assertEqual(response.status_code, 200)
-
     def test_create_product(self):
         response = self.client.post(
             '/api/v1/products', content_type='application/json', data=json.dumps(self.product))
