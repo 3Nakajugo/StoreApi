@@ -53,25 +53,27 @@ def get_single_product(product_id):
         return jsonify({'message': 'no product with such an id'}), 404
 
 
-@app.route('/api/v1/sales', methods=['POST', 'GET'])
-def get_post_sales_record():
-    if request.method == 'POST':
-        request_data = request.get_json(force=True)
-        new_record = dict()
-        if len(sales_records) == 0:
-            new_record["record_id"] = 1
-        else:
-            new_record['record_id'] = sales_records[-1]['record_id']+1
-        new_record["date"] = request_data["date"]
-        new_record["item"] = request_data["item"]
-        new_record["quantity"] = request_data["quantity"]
-        new_record["price"] = request_data["price"]
-        if (new_record["item"] == "" or new_record["quantity"] == "" or new_record["price"] == ""):
-            return jsonify({"message": "please input all fields"}), 400
-        sales_records.append(new_record)
-        return jsonify(new_record), 201
+@app.route('/api/v1/sales', methods=['POST'])
+def post_sales_record():
+    request_data = request.get_json(force=True)
+    new_record = dict()
+    if len(sales_records) == 0:
+        new_record["record_id"] = 1
     else:
-        return jsonify({"sale_records": sales_records}), 200
+        new_record['record_id'] = sales_records[-1]['record_id']+1
+    new_record["date"] = request_data["date"]
+    new_record["item"] = request_data["item"]
+    new_record["quantity"] = request_data["quantity"]
+    new_record["price"] = request_data["price"]
+    if (new_record["item"] == "" or new_record["quantity"] == "" or new_record["price"] == ""):
+        return jsonify({"message": "please input all fields"}), 400
+    sales_records.append(new_record)
+    return jsonify(new_record), 201
+
+
+@app.route('/api/v1/sales', methods=['GET'])
+def get_sales_record():
+    return jsonify({"sale_records": sales_records}), 200
 
 
 @app.route('/api/v1/sales/<int:record_id>', methods=['GET'])
