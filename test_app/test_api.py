@@ -34,15 +34,10 @@ class TestStore(unittest.TestCase):
             '/api/v1/products', content_type='application/json')
         self.assertEqual(response.status_code, 200)
 
-    def test_get_single_product(self):
-        response = self.client.get(
-            '/api/v1/products/1', content_type='application/json')
-        self.assertEqual(response.status_code, 200)
-
-    # def test_get_product_that_doesnot_exist(self):
+    # def test_get_single_product(self):
     #     response = self.client.get(
-    #         '/api/v1/products/3', content_type='application/json')
-    #     self.assertEqual(response.status_code, 404)
+    #         '/api/v1/products/1', content_type='application/json')
+    #     self.assertEqual(response.status_code, 200)
 
     def test_create_product(self):
         response = self.client.post(
@@ -84,9 +79,12 @@ class TestStore(unittest.TestCase):
             '/api/v1/sales', content_type='application/json')
         self.assertEqual(response.status_code, 200)
 
-    def test_get_single_record(self):
+    def test_get_single_record_or_product(self):
         response = self.client.get(
             '/api/v1/sales/1', content_type='application/json')
+        self.assertEqual(response.status_code, 200)
+        response = self.client.get(
+            '/api/v1/products/1', content_type='application/json')
         self.assertEqual(response.status_code, 200)
 
     def test_get_single_record_or_product_that_doesnot_exist(self):
