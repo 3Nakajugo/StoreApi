@@ -65,7 +65,12 @@ def post_sales_record():
     new_record["item"] = request_data["item"]
     new_record["quantity"] = request_data["quantity"]
     new_record["price"] = request_data["price"]
-    if (new_record["item"] == "" or new_record["quantity"] == "" or new_record["price"] == ""):
+    if new_record["item"] == "":
+        return jsonify({"message": "please input all fields"}), 400
+
+    if new_record["price"] == "":
+        return jsonify({"message": "please input all fields"}), 400
+    if new_record["quantity"] == "":
         return jsonify({"message": "please input all fields"}), 400
     sales_records.append(new_record)
     return jsonify(new_record), 201
