@@ -67,7 +67,6 @@ def post_sales_record():
     new_record["price"] = request_data["price"]
     if new_record["item"] == "":
         return jsonify({"message": "please input all fields"}), 400
-
     if new_record["price"] == "":
         return jsonify({"message": "please input all fields"}), 400
     if new_record["quantity"] == "":
@@ -82,7 +81,7 @@ def get_sales_record():
 
 
 @app.route('/api/v1/sales/<int:record_id>', methods=['GET'])
-def get_single_entry(record_id):
+def get_single_record(record_id):
     for record in sales_records:
         if record['record_id'] == record_id:
             return jsonify(record), 200
