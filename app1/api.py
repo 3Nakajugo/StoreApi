@@ -57,7 +57,7 @@ def get_single_product(product_id):
 def post_sales_record():
     request_data = request.get_json(force=True)
     new_record = dict()
-    if len(sales_records) == 0:
+    if sales_records == []:
         new_record["record_id"] = 1
     else:
         new_record['record_id'] = sales_records[-1]['record_id']+1
