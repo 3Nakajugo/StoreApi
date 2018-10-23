@@ -15,9 +15,9 @@ class TestStore(unittest.TestCase):
 
         self.sale_record = {
             "date": "12/13/2018",
-            "item": "['milk','water']",
-            "quantity": "[2,4]",
-            "price": "['837409237', '78678698']"
+            "item": ['milk', 'water'],
+            "quantity": [2, 4],
+            "price": ['837409237', '78678698']
         }
 
     def tearDown(self):
