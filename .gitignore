@@ -3,6 +3,3 @@
 venv/
 __pycache__/
 __pycache__/
-models
-tests/test_api
-app.py
