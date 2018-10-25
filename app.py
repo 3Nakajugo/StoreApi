@@ -1,5 +1,3 @@
-from app1.home import app
-from app1.post_product import app
+from flask import flask
 
-if __name__ == "__main__":
-    app.run(debug=True)
+app = 
