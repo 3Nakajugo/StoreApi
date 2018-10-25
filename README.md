@@ -29,4 +29,12 @@ Store Manager is a web application that helps store owners manage sales and prod
 
 ***Admin can get all sale order records***
 
+### Running Tests
+
+***pytest***
+
+### Author
+
+Edna Nakajugo Margaret
+
 

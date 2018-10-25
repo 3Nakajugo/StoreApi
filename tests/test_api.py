@@ -2,7 +2,7 @@ import unittest
 
 from flask import json
 
-from app1.api import app
+from app import app
 
 
 class TestStore(unittest.TestCase):
@@ -47,7 +47,7 @@ class TestStore(unittest.TestCase):
         response = self.client.post(
             '/api/v1/products', content_type='application/json', data=json.dumps(product))
         self.assertEqual(response.status_code, 400)
-        self.assertEqual(response.json, {"message": "please input all fields"})
+        self.assertEqual(response.json, {"message": "please input name ,quantity, price"})
 
     def test_create_sales_record(self):
 
