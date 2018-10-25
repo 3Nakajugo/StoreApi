@@ -1,3 +1,8 @@
-from flask import flask
+from flask import Flask
 
-app = 
+app = Flask(__name__)
+
+from project.views import app
+
+if __name__ == '__main__':
+    app.run()
