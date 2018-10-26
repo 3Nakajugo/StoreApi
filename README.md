@@ -30,9 +30,14 @@ Store Manager is a web application that helps store owners manage sales and prod
 
 ***Admin can get all sale order records***
 
+### Technologies
+* flask
+
+* python 3.7
+
 ### Running Tests
 
-***pytest***
+* pytest
 
 ### Author
 
