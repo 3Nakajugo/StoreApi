@@ -79,7 +79,7 @@ class TestStore(unittest.TestCase):
 
     def test_sales_record_hass_all_feilds(self):
         sale_record = {
-            "date": "12\30\2018",
+            "date": "12\30\1998",
             "items": "",
             "sale_quantity": "",
             "price": "['837409237', '78678698']"
