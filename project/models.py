@@ -64,4 +64,4 @@ class SaleRecord():
     def single_record(record_id):
         for record in sales_records:
             if record["record_id"] == record_id:
-                return jsonify(record)
+                return jsonify({"record": record})
