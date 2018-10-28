@@ -43,7 +43,7 @@ def get_single_product(product_id):
     single_product = Products.get_single_product(product_id)
     if single_product:
         return single_product, 200
-    return jsonify({"message": "no product with such an Id"}), 400
+    return jsonify({"message": "no product with such an Id"}), 404
 
 
 @app.route('/api/v1/sales', methods=['POST'])

@@ -97,6 +97,8 @@ class TestStore(unittest.TestCase):
         response = self.client.get(
             '/api/v1/sales/4', content_type='application/json')
         self.assertEqual(response.status_code, 404)
-        # response = self.client.get(
-        #     '/api/v1/products/30', content_type='application/json')
-        # self.assertEqual(response.status_code, 404)
+
+    def test_get_product_that_doesnot_exist(self):
+        response = self.client.get(
+            '/api/v1/products/30', content_type='application/json')
+        self.assertEqual(response.status_code, 404)
