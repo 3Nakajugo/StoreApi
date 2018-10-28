@@ -1,5 +1,6 @@
 from flask import jsonify
 products = []
+sales_records = []
 
 
 class Products():
@@ -32,3 +33,35 @@ class Products():
         for product in products:
             if product["product_id"] == product_id:
                 return jsonify(product)
+
+
+class SaleRecord():
+    def __init__(self, date, items, sale_quantity, prices):
+        self.record_id = len(sales_records)+1
+        self.date = date
+        self.items = items
+        self.sale_quantity = sale_quantity
+        self.prices = prices
+
+    def add_sale_record(self):
+        new_record = {
+            "record_id": self.record_id,
+            "date": self.date,
+            "items": self.items,
+            "sale_quantity": self.sale_quantity,
+            "prices": self.prices
+        }
+
+        sales_records.append(new_record)
+        return jsonify(sales_records)
+
+    @staticmethod
+    def get_sales_records():
+        if len(sales_records) > 0:
+            return jsonify(sales_records)
+
+    @staticmethod
+    def single_record(record_id):
+        for record in sales_records:
+            if record["record_id"] == record_id:
+                return jsonify(record)
