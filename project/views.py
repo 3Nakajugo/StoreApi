@@ -69,7 +69,7 @@ def post_sales_record():
 def get_sales_record():
     record = SaleRecord.get_sales_records()
     if record:
-        return record, 200
+        return jsonify(record), 200
     return jsonify({'message': 'no records to display'}), 400
 
 

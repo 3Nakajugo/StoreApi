@@ -58,7 +58,7 @@ class SaleRecord():
     @staticmethod
     def get_sales_records():
         if len(sales_records) > 0:
-            return jsonify(sales_records)
+            return sales_records
 
     @staticmethod
     def single_record(record_id):
