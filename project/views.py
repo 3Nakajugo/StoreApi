@@ -27,16 +27,15 @@ def post_products():
     if name == "":
         return jsonify({"message": "please input product name"}), 400
     quantity = request_data["quantity"]
-    if not quantity or quantity == "":
+    if quantity == "":
         return jsonify({"message": "please input product quantity "}), 400
     price = request_data["price"]
-    if not price or price == "":
+    if price == "":
         return jsonify({"message": "please input product price"}), 400
     new_product = Products(name, quantity, price)
     n_product = new_product.add_product()
     if n_product:
         return n_product, 201
-    return jsonify({"message": "product not created"}), 400
 
 
 @app.route('/api/v1/products/<int:product_id>', methods=['GET'])

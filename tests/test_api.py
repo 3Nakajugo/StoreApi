@@ -48,9 +48,9 @@ class TestStore(unittest.TestCase):
                                                       "quantity": "20"
                                                       }])
 
-    def test_empty_product_list(self):
-        response = self.client.get(
-        '/api/v1/products', content_type='application/json')
+    # def test_empty_product_list(self):
+    #     response = self.client.get(
+    #     '/api/v1/products', content_type='application/json')
 
 
     # def test_new_product_has_all_feilds(self):
