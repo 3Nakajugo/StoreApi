@@ -62,6 +62,8 @@ class SaleRecord():
 
     @staticmethod
     def single_record(record_id):
-        for record in sales_records:
-            if record["record_id"] == record_id:
-                return record
+        if isinstance(record_id, int):
+            for record in sales_records:
+                if record["record_id"] == record_id:
+                    return record
+        # return jsonify({"message": "record_id should be an integer"})

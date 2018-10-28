@@ -78,4 +78,4 @@ def get_single_record(record_id):
     s_record = SaleRecord.single_record(record_id)
     if s_record:
         return jsonify({"sale record": s_record}), 200
-    return jsonify({"message": "no record with such an Id"}), 400
+    return jsonify({"message": "no record with such an Id"}), 404
