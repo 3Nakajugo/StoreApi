@@ -15,7 +15,7 @@ def get_products():
 
     prod = Products.get_product_list()
     if prod:
-        return prod, 200
+        return jsonify({"products": prod}), 200
     return jsonify({"message": "no products to dispaly"}), 400
 
 
