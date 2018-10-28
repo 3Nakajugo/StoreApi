@@ -77,16 +77,27 @@ class TestStore(unittest.TestCase):
             '/api/v1/sales', content_type='application/json')
         self.assertEqual(response.status_code, 200)
 
-    def test_sales_record_hass_all_feilds(self):
+    def test_sales_record_has_items(self):
         sale_record = {
             "date": "12\30\1998",
             "items": "",
-            "sale_quantity": "",
+            "sale_quantity": "12",
             "price": "['837409237', '78678698']"
         }
         response = self.client.post(
             '/api/v1/sales', data=json.dumps(sale_record), content_type='application/json')
         self.assertEqual(response.json, {"message": "please input item(s) "})
+
+    def test_sales_record_has_date(self):
+        sale_record = {
+            "date": "",
+            "items": "cups",
+            "sale_quantity": "12",
+            "price": "['837409237', '78678698']"
+        }
+        response = self.client.post(
+            '/api/v1/sales', data=json.dumps(sale_record), content_type='application/json')
+        self.assertEqual(response.json, {"message": "please input date"})
 
     def test_get_single_record(self):
         response = self.client.get(
@@ -102,3 +113,6 @@ class TestStore(unittest.TestCase):
         response = self.client.get(
             '/api/v1/products/30', content_type='application/json')
         self.assertEqual(response.status_code, 404)
+
+    def test_record_id_is_int(self):
+        pass
