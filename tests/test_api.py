@@ -77,16 +77,16 @@ class TestStore(unittest.TestCase):
             '/api/v1/sales', content_type='application/json')
         self.assertEqual(response.status_code, 200)
 
-    # def test_sales_record_hass_all_feilds(self):
-    #     sale_record = {
-    #         "date": "12\30\2018",
-    #         "items": "",
-    #         "sale_quantity": "",
-    #         "price": "['837409237', '78678698']"
-    #     }
-    #     response = self.client.post(
-    #         '/api/v1/sales', data=json.dumps(sale_record), content_type='application/json')
-    #     self.assertEqual(response.status_code, 400)
+    def test_sales_record_hass_all_feilds(self):
+        sale_record = {
+            "date": "12\30\2018",
+            "items": "",
+            "sale_quantity": "",
+            "price": "['837409237', '78678698']"
+        }
+        response = self.client.post(
+            '/api/v1/sales', data=json.dumps(sale_record), content_type='application/json')
+        self.assertEqual(response.json, {"message": "please input item(s) "})
 
     def test_get_single_record(self):
         response = self.client.get(
