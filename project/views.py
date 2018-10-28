@@ -63,8 +63,7 @@ def post_sales_record():
         return jsonify({"message": "please input price"}), 400
     new_sales = SaleRecord(date, items, sale_quantity, prices)
     n_sales = new_sales.add_sale_record()
-    if n_sales:
-        return n_sales, 201
+    return n_sales, 201
 
 
 @app.route('/api/v1/sales', methods=['GET'])

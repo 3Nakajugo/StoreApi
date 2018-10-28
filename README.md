@@ -1,7 +1,6 @@
 [![Build Status](https://travis-ci.org/3Nakajugo/StoreApi.svg?branch=develop)](https://travis-ci.org/3Nakajugo/StoreApi)
 [![Maintainability](https://api.codeclimate.com/v1/badges/b0bdf8b205bf61399081/maintainability)](https://codeclimate.com/github/3Nakajugo/StoreApi/maintainability)
 [![Coverage Status](https://coveralls.io/repos/github/3Nakajugo/StoreApi/badge.svg?branch=develop)](https://coveralls.io/github/3Nakajugo/StoreApi?branch=develop)
-[![Coverage Status](https://coveralls.io/repos/github/3Nakajugo/StoreApi/badge.svg?branch=develop)](https://coveralls.io/github/3Nakajugo/StoreApi?branch=develop)
 # StoreApi
 ## Project Overview
 Store Manager is a web application that helps store owners manage sales and product inventory records. This application is meant for use in a single store.
