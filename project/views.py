@@ -34,9 +34,11 @@ def post_products():
         if price == "":
             return jsonify({"message": "please input product price"}), 400
         new_product = Products(name, quantity, price)
-        n_product = new_product.add_product()
-        if n_product:
+        check_product = new_product.check_product(name)
+        if not check_product:
+            n_product = new_product.add_product()
             return n_product, 201
+        return jsonify({"message": "product already exists"})
     except Exception:
         return jsonify({"message": "internal server error"}), 500
 

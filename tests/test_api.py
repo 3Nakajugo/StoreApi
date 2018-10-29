@@ -116,3 +116,8 @@ class TestStore(unittest.TestCase):
 
     def test_record_id_is_int(self):
         pass
+
+    # def test_product_already_exists(self):
+    #     response = self.client.post(
+    #         '/api/v1/products', data=json.dumps(self.product), content_type='application/json')
+    #     self.assertEqual(response.json, {"message": "product already exists"})
