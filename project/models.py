@@ -1,4 +1,5 @@
 from flask import jsonify
+
 products = []
 sales_records = []
 
@@ -22,6 +23,12 @@ class Products():
 
         products.append(new_product)
         return jsonify(products)
+
+    @staticmethod
+    def check_product(name):
+        for product in products:
+            if product["product_id"] == name:
+                return jsonify({"message": "product name already exists"})
 
     @staticmethod
     def get_product_list():
