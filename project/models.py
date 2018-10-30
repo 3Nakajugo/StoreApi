@@ -2,6 +2,7 @@ from flask import jsonify
 
 products = []
 sales_records = []
+users = []
 
 
 class Products():
@@ -27,8 +28,9 @@ class Products():
     @staticmethod
     def check_product(name):
         for product in products:
-            if product["product_id"] == name:
-                return jsonify({"message": "product name already exists"})
+            if product["name"] == name:
+                return True
+        return False
 
     @staticmethod
     def get_product_list():
@@ -74,3 +76,24 @@ class SaleRecord():
                 if record["record_id"] == record_id:
                     return record
         # return jsonify({"message": "record_id should be an integer"})
+
+
+class User():
+
+    def __init__(self, user_id, username, password, gender):
+        self.user_id = user_id
+        self.username = username
+        self.password = password
+        self.gender = gender
+
+    def register(self):
+        new_user = {
+            "user_id": self.user_id,
+            "username": self.username,
+            "password": self.password,
+            "gender": self.gender
+
+        }
+
+        users.append(new_user)
+        return jsonify(users)

@@ -1,6 +1,9 @@
 from flask import Flask, jsonify, request
 
-from project.models import Products, SaleRecord
+# from flask_jwt_extended import jwt_required, create_access_token, get_jwt_identity
+
+from project.models import Products, SaleRecord, User
+
 
 from app import app
 
@@ -34,9 +37,11 @@ def post_products():
         if price == "":
             return jsonify({"message": "please input product price"}), 400
         new_product = Products(name, quantity, price)
-        n_product = new_product.add_product()
-        if n_product:
+        check_product = new_product.check_product(name)
+        if not check_product:
+            n_product = new_product.add_product()
             return n_product, 201
+        return jsonify({"message": "product already exists"})
     except Exception:
         return jsonify({"message": "internal server error"}), 500
 
@@ -85,3 +90,19 @@ def get_single_record(record_id):
     if s_record:
         return jsonify({"sale record": s_record}), 200
     return jsonify({"message": "no record with such an Id"}), 404
+
+
+@app.route('/api/v1/users', methods=['POST'])
+def create_user():
+    try:
+        user_data = request.get_json(force=True)
+        user_id = user_data["user_id"]
+        username = user_data["username"]
+        password = user_data["password"]
+        gender = user_data["gender"]
+
+        attendant = User(user_id, username, password, gender)
+        user_attendant = attendant.register()
+        return user_attendant
+    except Exception:
+        return jsonify({"message": "please input all feilds"})
