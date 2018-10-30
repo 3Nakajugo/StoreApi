@@ -1,6 +1,6 @@
 from flask import Flask, jsonify, request
 
-from flask_jwt_extended import jwt_required, create_access_token, get_jwt_identity
+# from flask_jwt_extended import jwt_required, create_access_token, get_jwt_identity
 
 from project.models import Products, SaleRecord, User
 
@@ -14,7 +14,6 @@ def greet():
 
 
 @app.route('/api/v1/products', methods=['GET'])
-@jwt_required
 def get_products():
 
     prod = Products.get_product_list()
