@@ -1,6 +1,9 @@
 from flask import Flask, jsonify, request
 
-from project.models import Products, SaleRecord
+from flask_jwt_extended import jwt_required, create_access_token, get_jwt_identity
+
+from project.models import Products, SaleRecord, User
+
 
 from app import app
 
@@ -11,6 +14,7 @@ def greet():
 
 
 @app.route('/api/v1/products', methods=['GET'])
+@jwt_required
 def get_products():
 
     prod = Products.get_product_list()
@@ -87,3 +91,19 @@ def get_single_record(record_id):
     if s_record:
         return jsonify({"sale record": s_record}), 200
     return jsonify({"message": "no record with such an Id"}), 404
+
+
+@app.route('/api/v1/users', methods=['POST'])
+def create_user():
+    try:
+        user_data = request.get_json(force=True)
+        user_id = user_data["user_id"]
+        username = user_data["username"]
+        password = user_data["password"]
+        gender = user_data["gender"]
+
+        attendant = User(user_id, username, password, gender)
+        user_attendant = attendant.register()
+        return user_attendant
+    except Exception:
+        return jsonify({"message": "please input all feilds"})
