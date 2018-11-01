@@ -20,6 +20,8 @@ class Validator:
                 return "product price cannot be less than zero"
             if category == "":
                 return "please enter product category"
+            if isinstance(category, int):
+                return "category should be characters"
 
         except KeyError:
             return "please enter all fields"

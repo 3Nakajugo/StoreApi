@@ -36,3 +36,12 @@ class ProductController:
             if product["product_id"] == product_id:
                 products.remove(product)
                 return products
+
+    def update_product(self, product_id, product_name, quantity, unit_price, category):
+        for product in products:
+            if product.product_id == product_id:
+                product.update(product_name=product_name,
+                               quantity=quantity,
+                               unit_price=unit_price,
+                               category=category)
+                return products

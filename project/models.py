@@ -24,23 +24,22 @@ class SaleRecord:
         self.total_price = total_price
 
 
+class User:
 
-    # class User():
+    def __init__(self, user_id, username, password, role):
+        self.user_id = user_id
+        self.username = username
+        self.password = password
+        self.role = role
 
-    #     def __init__(self, user_id, username, password, role):
-    #         self.user_id = user_id
-    #         self.username = username
-    #         self.password = password
-    #         self.role = role
+    def register(self):
+        new_user = {
+            "user_id": self.user_id,
+            "username": self.username,
+            "password": self.password,
+            "role": self.role
 
-    #     def register(self):
-    #         new_user = {
-    #             "user_id": self.user_id,
-    #             "username": self.username,
-    #             "password": self.password,
-    #             "role": self.role
+            }
 
-    #         }
-
-    #         users.append(new_user)
-    #         return users
+        users.append(new_user)
+        return users

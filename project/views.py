@@ -63,6 +63,20 @@ def delete_single_product(product_id):
     return jsonify({"message": "no product with such an Id"}), 404
 
 
+@app.route('/api/v1/products/<int:product_id>', methods=['PUT'])
+def update_single_product(product_id):
+    request_data = request.get_json()
+    product_name = request_data["product_name"]
+    quantity = request_data["quantity"]
+    unit_price = request_data["unit_price"]
+    category = request_data["category"]
+    updated_product = product_controller.update_product(product_id,
+                                                        product_name, quantity, unit_price, category)
+    if updated_product:
+        return jsonify(products), 201
+    return jsonify({"message": "no product with such an Id"}), 404
+
+
 @app.route('/api/v1/sales', methods=['POST'])
 def post_sales_record():
     request_data = request.get_json()
