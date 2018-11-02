@@ -5,6 +5,14 @@
 ## Project Overview
 Store Manager is a web application that helps store owners manage sales and product inventory records. This application is meant for use in a single store.
 
+
+##  Prerequists
+
+* Git
+* python
+* postman
+* postgres
+
 ## Required Features
   
 ***Store attendant can search and add products to buyer’s cart.***
@@ -29,10 +37,14 @@ Store Manager is a web application that helps store owners manage sales and prod
 
 ***Admin can get all sale order records***
 
-### Technologies
-* flask
+## Getting started
 
-* python 3.7
+For installation of the project `$ git clone https://github.com/3Nakajugo/StoreApi.git`
+
+
+### Running the app 
+
+* `$ flask run`
 
 ### Running Tests
 

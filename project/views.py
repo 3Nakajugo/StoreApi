@@ -125,7 +125,7 @@ def delete_sales_record(record_id):
         return jsonify(sales_records)
 
 
-@app.route('/api/v2/users', methods=['POST'])
+@app.route('/api/v2/users/signup', methods=['POST'])
 def create_user():
     user_data = request.get_json()
     username = user_data["username"]
@@ -140,3 +140,18 @@ def create_user():
     if user_attendant:
         return jsonify({"message": "user was created"}), 201
     return jsonify({"message": "user has not been created"}), 400
+
+
+@app.route('/api/v2/users/login', methods=['POST'])
+def login_user():
+    try:
+        user_data = request.get_json()
+        username = user_data["username"]
+        password = user_data["password"]
+        login = database_query.login(username, password)
+        if login:
+            return 
+
+
+    except:
+        pass

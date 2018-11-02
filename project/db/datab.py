@@ -79,4 +79,9 @@ class Database:
         create_user = (
             """INSERT INTO users(username ,password, role) VALUES ('{}','{}','{}')""".format(username, password, role))
 
-        self.connection.cursor().execute(create_user)
+        self.cursor.execute(create_user)
+
+    def login(self, username, password):
+        user_login = (
+            """ SELECT * FROM users WHERE username= '{}' AND password ='{}' """. format(username, password))
+        return self.cursor.execute(user_login)
