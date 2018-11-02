@@ -1,4 +1,5 @@
 from flask import Flask, jsonify, request
+from flask_jwt_extended import create_access_token, get_jwt_identity
 from project.models import Product, SaleRecord, User, sales_records
 from project.validator import Validator
 from controller.product_contr import ProductController
@@ -150,8 +151,10 @@ def login_user():
         password = user_data["password"]
         login = database_query.login(username, password)
         if login:
-            return 
-
-
+            token = {}
+            access_token = create_access_token(identity=username)
+            token["token"] = access_token
+            return jsonify(token), 200
+        return jsonify({"message": "failed to login"})
     except:
-        pass
+        return jsonify({"message": "token was not created"})
