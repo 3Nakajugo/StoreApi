@@ -26,8 +26,8 @@ class Validator:
         except KeyError:
             return "please enter all fields"
 
-    def validate_id(self, product_id):
-        if not isinstance(product_id, int):
+    def validate_id(self, productid):
+        if not isinstance(productid, int):
             return True
         return False
 
@@ -49,3 +49,6 @@ class Validator:
                 return "total price must be an integer"
         except KeyError:
             return "please input all fields"
+
+    def validate_user(self):
+        pass
