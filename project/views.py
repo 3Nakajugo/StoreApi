@@ -1,8 +1,9 @@
 from flask import Flask, jsonify, request
-from project.models import Product, SaleRecord, sales_records
+from project.models import Product, SaleRecord, User, sales_records
 from project.validator import Validator
 from controller.product_contr import ProductController
 from controller.sales_contr import SalesController
+from controller.user_contr import UserController
 from app import app
 from project.db.datab import Database
 
@@ -11,6 +12,7 @@ valid = Validator()
 product_controller = ProductController()
 sales_controller = SalesController()
 database_query = Database()
+user_controller = UserController()
 
 
 @app.route('/api/v2/')
@@ -34,9 +36,6 @@ def post_products():
     add_product = product_controller.add_product(
         product_name=product_obj.product_name, quantity=product_obj.quantity, unit_price=product_obj.unit_price, category=product_obj.category)
     if add_product:
-        # check_product = product_controller.check_product(product_name)
-        # if isinstance(check_product, tuple):
-        # return jsonify({"message": "product already exists"}), 400
         return jsonify({"message": "product has been created"}), 201
     return jsonify({"message": "product not created"})
 
@@ -126,24 +125,18 @@ def delete_sales_record(record_id):
         return jsonify(sales_records)
 
 
-# @app.route('/api/v1/users', methods=['POST'])
-# def create_user():
-#     try:
-#         user_data = request.get_json(force=True)
-#         user_id = user_data["user_id"]
-#         if user_id == "":
-#             return jsonify({'message': 'please input user_id'}), 400
-#         username = user_data["username"]
-#         if username == "":
-#             return jsonify({'message': 'please input username'}), 400
-#         password = user_data["password"]
-#         if password == "":
-#             return jsonify({'message': 'please input password'}), 400
-#         role = user_data["role"]
-#         if role == "":
-#             return jsonify({'message': 'please input user role'}), 400
-#         attendant = User(user_id, username, password, role)
-#         user_attendant = attendant.register()
-#         return jsonify(user_attendant), 201
-#     except Exception:
-#         return jsonify({"message": "please input all feilds"})
+@app.route('/api/v2/users', methods=['POST'])
+def create_user():
+    user_data = request.get_json()
+    username = user_data["username"]
+    password = user_data["password"]
+    role = user_data["role"]
+    validate_user = valid.validate_user(username, password, role)
+    if validate_user:
+        return jsonify({"message": "user is not valid"})
+    attendant = User(username, password, role)
+    user_attendant = user_controller.register_user(
+        username=attendant.username, password=attendant.password, role=attendant.role)
+    if user_attendant:
+        return jsonify({"message": "user was created"}), 201
+    return jsonify({"message": "user has not been created"}), 400

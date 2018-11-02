@@ -50,5 +50,16 @@ class Validator:
         except KeyError:
             return "please input all fields"
 
-    def validate_user(self):
-        pass
+    def validate_user(self, username, password, role):
+        try:
+            if username == "":
+                return "username cannot be empty"
+            if password == "":
+                return "password cannot be empty"
+            if role == "":
+                return "role cannot be empty"
+            if not isinstance(username, str):
+                return "username must be a string of characters"
+
+        except KeyError:
+            return "please input all fields"

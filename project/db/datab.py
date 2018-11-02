@@ -14,7 +14,7 @@ class Database:
         ''' create table users '''
         self.connection.cursor().execute(
             "CREATE TABLE IF NOT EXISTS users(userid SERIAL PRIMARY KEY NOT NULL , \
-            username VARCHAR(20) NOT NULL, password VARCHAR(30) NOT NULL)")
+            username VARCHAR(20) NOT NULL, password VARCHAR(30) NOT NULL, role VARCHAR(30) NOT NULL)")
 
         '''create table sales'''
         self.connection.cursor().execute(
@@ -72,5 +72,11 @@ class Database:
 
     ''' method to update a product'''
 
-    def update_product(self, productid):
-        query = (""" UPDATE FROM product """)
+    # def update_product(self, productid):
+    #     query = (""" UPDATE FROM product """)
+
+    def post_user(self, username, password, role):
+        create_user = (
+            """INSERT INTO users(username ,password, role) VALUES ('{}','{}','{}')""".format(username, password, role))
+
+        self.connection.cursor().execute(create_user)
