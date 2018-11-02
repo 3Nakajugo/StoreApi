@@ -1,21 +1,27 @@
 from flask import Flask, jsonify, request
-from project.models import Product, SaleRecord, products, sales_records
+from flask_jwt_extended import create_access_token, get_jwt_identity
+from project.models import Product, SaleRecord, User, sales_records
 from project.validator import Validator
 from controller.product_contr import ProductController
 from controller.sales_contr import SalesController
+from controller.user_contr import UserController
 from app import app
+from project.db.datab import Database
+
 
 valid = Validator()
 product_controller = ProductController()
 sales_controller = SalesController()
+database_query = Database()
+user_controller = UserController()
 
 
-@app.route('/api/v1/')
+@app.route('/api/v2/')
 def greet():
     return ('welcome to my store'), 200
 
 
-@app.route('/api/v1/products', methods=['POST'])
+@app.route('/api/v2/products', methods=['POST'])
 def post_products():
     request_data = request.get_json()
     product_name = request_data["product_name"]
@@ -26,55 +32,54 @@ def post_products():
         product_name, quantity, unit_price, category)
     if validate_product:
         return jsonify({"message": "product is invalid"}), 400
-    product_obj = Product(product_name, quantity, unit_price, category)
+    product_obj = Product(product_name,
+                          quantity, unit_price, category)
     add_product = product_controller.add_product(
-        product_id=product_obj.product_id, product_name=product_obj.product_name, quantity=product_obj.quantity, unit_price=product_obj.unit_price, category=product_obj.category)
-    check_product = product_controller.check_product(product_name)
-    if isinstance(check_product, Product):
-        return jsonify({"message": "product already exists"}), 400
-    return jsonify(add_product), 201
+        product_name=product_obj.product_name, quantity=product_obj.quantity, unit_price=product_obj.unit_price, category=product_obj.category)
+    if add_product:
+        return jsonify({"message": "product has been created"}), 201
+    return jsonify({"message": "product not created"})
 
 
-@app.route('/api/v1/products', methods=['GET'])
+@app.route('/api/v2/products', methods=['GET'])
 def get_products():
     prod = product_controller.get_product_list()
     if prod:
-        return jsonify({"products": prod}), 200
-    return jsonify({"message": "no products to dispaly"}), 400
+        return jsonify({"message": prod}), 200
+    return jsonify({"message": "no products to display"})
 
 
-@app.route('/api/v1/products/<int:product_id>', methods=['GET'])
-def get_single_product(product_id):
-    validate_id = valid.validate_id(product_id)
+@app.route('/api/v2/products/<int:productid>', methods=['GET'])
+def get_single_product(productid):
+    validate_id = valid.validate_id(productid)
     if validate_id:
         return jsonify({"message": "product id must be integer"}), 400
-    single_product = product_controller.get_single_product(product_id)
+    single_product = product_controller.get_single_product(productid=productid)
     if single_product:
         return jsonify(single_product), 200
-    print("reached here")
     return jsonify({"message": "no product with such an Id"}), 404
 
 
-@app.route('/api/v1/products/<int:product_id>', methods=['DELETE'])
-def delete_single_product(product_id):
-    delete_product = product_controller.delete_product(product_id)
+@app.route('/api/v2/products/<int:productid>', methods=['DELETE'])
+def delete_single_product(productid):
+    delete_product = product_controller.delete_product(productid)
     if delete_product:
-        return jsonify(products), 200
+        return jsonify({"message": "product was deleted successfully"})
     return jsonify({"message": "no product with such an Id"}), 404
 
 
-@app.route('/api/v1/products/<int:product_id>', methods=['PUT'])
-def update_single_product(product_id):
-    request_data = request.get_json()
-    product_name = request_data["product_name"]
-    quantity = request_data["quantity"]
-    unit_price = request_data["unit_price"]
-    category = request_data["category"]
-    updated_product = product_controller.update_product(product_id,
-                                                        product_name, quantity, unit_price, category)
-    if updated_product:
-        return jsonify(products), 201
-    return jsonify({"message": "no product with such an Id"}), 404
+# @app.route('/api/v1/products/<int:product_id>', methods=['PUT'])
+# def update_single_product(product_id):
+#     request_data = request.get_json()
+#     product_name = request_data["product_name"]
+#     quantity = request_data["quantity"]
+#     unit_price = request_data["unit_price"]
+#     category = request_data["category"]
+#     updated_product = product_controller.update_product(product_id,
+#                                                         product_name, quantity, unit_price, category)
+#     if updated_product:
+#         return jsonify(products), 201
+#     return jsonify({"message": "no product with such an Id"}), 404
 
 
 @app.route('/api/v1/sales', methods=['POST'])
@@ -121,24 +126,38 @@ def delete_sales_record(record_id):
         return jsonify(sales_records)
 
 
-# @app.route('/api/v1/users', methods=['POST'])
-# def create_user():
-#     try:
-#         user_data = request.get_json(force=True)
-#         user_id = user_data["user_id"]
-#         if user_id == "":
-#             return jsonify({'message': 'please input user_id'}), 400
-#         username = user_data["username"]
-#         if username == "":
-#             return jsonify({'message': 'please input username'}), 400
-#         password = user_data["password"]
-#         if password == "":
-#             return jsonify({'message': 'please input password'}), 400
-#         role = user_data["role"]
-#         if role == "":
-#             return jsonify({'message': 'please input user role'}), 400
-#         attendant = User(user_id, username, password, role)
-#         user_attendant = attendant.register()
-#         return jsonify(user_attendant), 201
-#     except Exception:
-#         return jsonify({"message": "please input all feilds"})
+@app.route('/api/v2/users/signup', methods=['POST'])
+def create_user():
+    user_data = request.get_json()
+    username = user_data["username"]
+    password = user_data["password"]
+    role = user_data["role"]
+    validate_user = valid.validate_user(username, password, role)
+    if validate_user:
+        return jsonify({"message": "user is not valid"})
+    attendant = User(username, password, role)
+    user_attendant = user_controller.register_user(
+        username=attendant.username, password=attendant.password, role=attendant.role)
+    if user_attendant:
+        return jsonify({"message": "user was created"}), 201
+    return jsonify({"message": "user has not been created"}), 400
+
+
+@app.route('/api/v2/users/login', methods=['POST'])
+def login_user():
+    try:
+        user_data = request.get_json()
+        username = user_data["username"]
+        password = user_data["password"]
+        validate_login = valid.validate_login(username, password)
+        if validate_login:
+            return jsonify({"message": "invalid user"})
+        login = database_query.login(username, password)
+        if login:
+            token = {}
+            access_token = create_access_token(identity=username)
+            token["token"] = access_token
+            return jsonify(token), 200
+        return jsonify({"message": "failed to login"}), 400
+    except:
+        return jsonify({"message": "token was not created"}), 400

@@ -1,7 +1,12 @@
 from flask import Flask
-from project.db.db import Database
+from project.db.datab import Database
+from flask_jwt_extended import (JWTManager,jwt_required, create_access_token, get_jwt_identity)
+
 
 app = Flask(__name__)
+
+app.config['JWT_SECRET_KEY']= "edna"
+jwt = JWTManager(app)
 
 from project.views import app
 

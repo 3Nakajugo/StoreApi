@@ -26,8 +26,8 @@ class Validator:
         except KeyError:
             return "please enter all fields"
 
-    def validate_id(self, product_id):
-        if not isinstance(product_id, int):
+    def validate_id(self, productid):
+        if not isinstance(productid, int):
             return True
         return False
 
@@ -47,5 +47,31 @@ class Validator:
                 return "please input total price"
             if not isinstance(total_price, int):
                 return "total price must be an integer"
+        except KeyError:
+            return "please input all fields"
+
+    def validate_user(self, username, password, role):
+        try:
+            if username == "":
+                return "username cannot be empty"
+            if password == "":
+                return "password cannot be empty"
+            if role == "":
+                return "role cannot be empty"
+            if not isinstance(username, str):
+                return "username must be a string of characters"
+
+        except KeyError:
+            return "please input all fields"
+
+    def validate_login(self, username, password):
+        try:
+            if username == "":
+                return "username cannot be empty"
+            if password == "":
+                return "password cannot be empty"
+            if not isinstance(username, str):
+                return "username must be a string of characters"
+
         except KeyError:
             return "please input all fields"
