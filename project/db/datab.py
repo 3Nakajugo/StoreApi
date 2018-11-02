@@ -84,4 +84,6 @@ class Database:
     def login(self, username, password):
         user_login = (
             """ SELECT * FROM users WHERE username= '{}' AND password ='{}' """. format(username, password))
-        return self.cursor.execute(user_login)
+        self.cursor.execute(user_login)
+        user = self.cursor.fetchone()
+        return user

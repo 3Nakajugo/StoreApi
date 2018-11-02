@@ -150,11 +150,12 @@ def login_user():
         username = user_data["username"]
         password = user_data["password"]
         login = database_query.login(username, password)
+        print(login)
         if login:
             token = {}
             access_token = create_access_token(identity=username)
             token["token"] = access_token
             return jsonify(token), 200
-        return jsonify({"message": "failed to login"})
+        return jsonify({"message": "failed to login"}), 400
     except:
-        return jsonify({"message": "token was not created"})
+        return jsonify({"message": "token was not created"}), 400
