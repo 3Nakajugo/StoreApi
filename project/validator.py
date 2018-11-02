@@ -63,3 +63,15 @@ class Validator:
 
         except KeyError:
             return "please input all fields"
+
+    def validate_login(self, username, password):
+        try:
+            if username == "":
+                return "username cannot be empty"
+            if password == "":
+                return "password cannot be empty"
+            if not isinstance(username, str):
+                return "username must be a string of characters"
+
+        except KeyError:
+            return "please input all fields"

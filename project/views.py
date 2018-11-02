@@ -149,8 +149,10 @@ def login_user():
         user_data = request.get_json()
         username = user_data["username"]
         password = user_data["password"]
+        validate_login = valid.validate_login(username, password)
+        if validate_login:
+            return jsonify({"message": "invalid user"})
         login = database_query.login(username, password)
-        print(login)
         if login:
             token = {}
             access_token = create_access_token(identity=username)

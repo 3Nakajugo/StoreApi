@@ -1,14 +1,25 @@
+import os
 import psycopg2
 
 
 class Database:
 
     def __init__(self):
-        ''' create connection'''
-        self.connection = psycopg2.connect(
-            dbname="Store", user="postgres", password="postgres", host="localhost", port="5432")
-        self.cursor = self.connection.cursor()
-        self.connection.autocommit = True
+        try:
+            if os.getenv('APP_SETTINGS') == 'testing':
+                database = 'testdb'
+
+            else:
+                database = 'Store'
+                # print(database)
+            ''' create connection'''
+            self.connection = psycopg2.connect(
+                dbname=database, user="postgres", password="postgres", host="localhost", port="5432")
+            self.cursor = self.connection.cursor()
+            self.connection.autocommit = True
+            print(database)
+        except:
+            print("cannot connect succesfull")
 
     def create_table(self):
         ''' create table users '''
