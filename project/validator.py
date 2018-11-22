@@ -33,10 +33,8 @@ class Validator:
 
     def validate_new_record(self, date, items, sale_quantity, total_price):
         try:
-            if date == "":
-                return "please input date"
-            if items == "":
-                return"please input items sold"
+            if date == "" and items == "":
+                return "please input date or items"
             if not isinstance(items, str):
                 return "items must be in a string"
             if sale_quantity == "":
