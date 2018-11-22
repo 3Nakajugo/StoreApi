@@ -20,11 +20,11 @@ class SalesController:
             return sales_records
 
     def single_record(self, record_id):
-        if isinstance(record_id, int):
-            for record in sales_records:
-                if record["record_id"] == record_id:
-                    return record
-            return "record_id should be an integer"
+        # if isinstance(record_id, int):
+        for record in sales_records:
+            if record["record_id"] == record_id:
+                return record
+        return "record_id should be an integer"
 
     def delete_single_product(self, record_id):
         for sale in sales_records:
