@@ -5,20 +5,22 @@ import psycopg2
 class Database:
 
     def __init__(self):
-        try:
-            if os.getenv('APP_SETTINGS') == 'testing':
-                database = 'testdb'
+        self.connection = psycopg2.connect(dbname= "Store", user="postgres", password="postgres", host="localhost", port="5432")
+        self.cursor = self.connection.cursor()
+        self.connection.autocommit = True
+        # try:
+            # if os.getenv('APP_SETTINGS') == 'testing':
+                # database = 'testdb'
 
-            else:
-                database = 'Store'
-            ''' create connection'''
-            self.connection = psycopg2.connect(
-                dbname=database, user="postgres", password="postgres", host="localhost", port="5432")
-            self.cursor = self.connection.cursor()
-            self.connection.autocommit = True
-            print(database)
-        except:
-            print("cannot connect succesfully")
+            # else:
+                # database = 'Store'
+            # ''' create connection'''
+        # self.connection = psycopg2.connect(dbname= "Store", user="postgres", password="postgres", host="localhost", port="5432")
+        # self.cursor = self.connection.cursor()
+        # self.connection.autocommit = True
+            # print(database)
+        # except:
+            # print("cannot connect succesfully")
 
     def create_table(self):
         ''' create table users '''
