@@ -18,7 +18,7 @@ class Database:
             self.connection.autocommit = True
             print(database)
         except:
-            print("cannot connect succesfull")
+            print("cannot connect succesfully")
 
     def create_table(self):
         ''' create table users '''
