@@ -2,9 +2,9 @@ from flask import Flask, jsonify, request
 from flask_jwt_extended import create_access_token, get_jwt_identity
 from project.models import Product, SaleRecord, User, sales_records
 from project.validator import Validator
-from controller.product_contr import ProductController
-from controller.sales_contr import SalesController
-from controller.user_contr import UserController
+from .controller.product_contr  import ProductController
+from .controller.sales_contr import SalesController
+from .controller.user_contr import UserController
 from app import app
 from project.db.datab import Database
 

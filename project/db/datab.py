@@ -11,7 +11,6 @@ class Database:
 
             else:
                 database = 'Store'
-                # print(database)
             ''' create connection'''
             self.connection = psycopg2.connect(
                 dbname=database, user="postgres", password="postgres", host="localhost", port="5432")

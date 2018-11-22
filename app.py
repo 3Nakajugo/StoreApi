@@ -1,6 +1,6 @@
 from flask import Flask
-from project.db.datab import Database
 from flask_jwt_extended import (JWTManager,jwt_required, create_access_token, get_jwt_identity)
+from project.db.datab import Database
 
 
 app = Flask(__name__)
